@@ -1,0 +1,45 @@
+version: '3'
+
+services:
+
+  # db :
+  #   build: ./requirements/mariadb/
+  #   container_name: db
+  #   ports:
+  #     - "3306:3306"
+  #   networks:
+  #     - backend
+  #   restart: always
+  #   volumes:
+  #     - ./requirements/mariadb/data:/var/lib/mariadb
+  #   env_file: .env
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: 1234
+  #     MYSQL_DATABASE: wordpress
+  #     MYSQL_USER: user
+  #     MYSQL_PASSWORD: 1234
+
+  wordpress :
+    depends_on:
+      # - db
+    build: ./requirements/wordpress/
+    container_name: wp
+    ports:
+      - "8080:80"
+    networks:
+      - backend
+      - frontend
+    restart: always
+    volumes:
+      - ./requirements/wordpress/data:/var/www/html
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+
+  nginx :
+    build: ./requirements/nginx/
+
+networks:
+  frontend:
+  backend:
