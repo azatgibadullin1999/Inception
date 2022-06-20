@@ -1,0 +1,6 @@
+.srcs/requirements/mariadb/start.sh
+.srcs/requirements/mariadb/delete.sh
+.srcs/requirements/nginx/start.sh
+.srcs/requirements/nginx/delete.sh
+.srcs/requirements/wordpress/start.sh
+.srcs/requirements/wordpress/delete.sh
