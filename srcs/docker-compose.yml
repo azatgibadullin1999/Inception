@@ -2,28 +2,25 @@ version: '3'
 
 services:
 
-  # db :
-  #   build: ./requirements/mariadb/
-  #   container_name: db
-  #   ports:
-  #     - "3306:3306"
-  #   networks:
-  #     - backend
-  #   restart: always
-  #   volumes:
-  #     - ./requirements/mariadb/data:/var/lib/mariadb
-  #   env_file: .env
-  #   environment:
-  #     MYSQL_ROOT_PASSWORD: 1234
-  #     MYSQL_DATABASE: wordpress
-  #     MYSQL_USER: user
-  #     MYSQL_PASSWORD: 1234
+#   MARIADB CONFIG
+  mariadb :
+    container_name: mariadb
+    build: ./requirements/mariadb/
+    ports:
+      - "3306:3306"
+    networks:
+      - backend
+    restart: always
+    volumes:
+      - mariadb:/var/lib/mariadb
+    env_file: .env
 
+#   WORDPRESS CONFIG
   wordpress :
     depends_on:
-      # - db
+      - mariadb
+    container_name: wordpress
     build: ./requirements/wordpress/
-    container_name: wp
     ports:
       - "8080:80"
     networks:
@@ -31,14 +28,21 @@ services:
       - frontend
     restart: always
     volumes:
-      - ./requirements/wordpress/data:/var/www/html
-    environment:
-      PMA_HOST: db
-      PMA_PORT: 3306
-      PMA_ARBITRARY: 1
+      - wordpress:/var/www/html
 
+#   NGINX CONFIG
   nginx :
+    depend_on:
+      - mariadb
+      - wordpress
+    container_name: nginx
     build: ./requirements/nginx/
+    ports:
+      - 80:80
+      - 443:443
+    restart: always
+    volumes: wordpress:/var/www/html
+    env_file: .env
 
 networks:
   frontend:
