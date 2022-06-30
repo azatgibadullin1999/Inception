@@ -40,10 +40,24 @@ services:
     ports:
       - 80:80
       - 443:443
+    networks:
+      - frontend
     restart: always
     volumes: wordpress:/var/www/html
     env_file: .env
 
+#   NETWORKS
 networks:
   frontend:
   backend:
+
+#   VOLUMES
+volumes:
+  wordpress:
+    driver: local
+    driver_opts:
+      device: /home/${USER}/data/wordpress
+  mariadb:
+    driver: local
+    driver_opts:
+      device: /home/${USER}/data/mariadb
