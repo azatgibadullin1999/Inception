@@ -6,7 +6,8 @@ RUN apt-get install -y \
 					nginx \
 					openssl
 
-RUN mkdir /etc/nginx/ssl
+RUN mkdir -p /etc/nginx/ssl \
+	mkdir -p /var/www/html/wordpress
 RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
 	-keyout /etc/nginx/ssl/nginx.key \
 	-out /etc/nginx/ssl/nginx.crt \
@@ -14,5 +15,5 @@ RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
 
 COPY conf/nginx.conf /etc/nginx/conf.d/default.conf
 
-CMD [ "bash" ]
-# CMD [ "nginx", "-g", "daemon off;" ]
+# CMD [ "bash" ]
+CMD [ "nginx", "-g", "daemon off;" ]
