@@ -1,8 +1,8 @@
 #!/bin/bash
 service mysql start
 mysql -u root --password="" <<EOF
-CREATE DATABASE wordpressdb DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
-GRANT ALL ON wordpressdb.* TO 'admin'@'%' IDENTIFIED BY 'admin';
+IF DB_ID('${DB_NAME}') IS NOT NULL BEGIN CREATE DATABASE ${DB_NAME} DEFAULT CHARACTER SET ${DB_CHARSET} COLLATE ${DB_ENCODING} END;
+GRANT ALL ON ${DB_NAME}.* TO ${DB_ADMIN}@'%' IDENTIFIED BY ${DB_ADMIN_PASS};
 FLUSH PRIVILEGES;
 EOF
 
