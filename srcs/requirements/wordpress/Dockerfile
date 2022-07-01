@@ -25,6 +25,7 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
 	mv wp-cli.phar /usr/bin/wp
 
 COPY ./conf/www.conf /etc/php/7.3/fpm/pool.d/www.conf
+COPY ./conf/php-fpm.conf /etc/php/7.3/fpm/php-fpm.conf
 COPY ./tools/start.sh /start.sh
 RUN chmod 744 /start.sh
 
