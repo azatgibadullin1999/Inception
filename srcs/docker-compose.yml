@@ -12,7 +12,7 @@ services:
       - backend
     restart: always
     volumes:
-      - mariadb:/var/lib/mariadb
+      - ~/data/mariadb:/var/lib/mariadb
     env_file: .env
 
 #   WORDPRESS CONFIG
@@ -28,11 +28,11 @@ services:
       - frontend
     restart: always
     volumes:
-      - wordpress:/var/www/html
+      - ~/data/wordpress:/var/www/html
 
 #   NGINX CONFIG
   nginx :
-    depend_on:
+    depends_on:
       - mariadb
       - wordpress
     container_name: nginx
@@ -43,7 +43,8 @@ services:
     networks:
       - frontend
     restart: always
-    volumes: wordpress:/var/www/html
+    volumes:
+      - ~/data/wordpress:/var/www/html
     env_file: .env
 
 #   NETWORKS
@@ -52,12 +53,14 @@ networks:
   backend:
 
 #   VOLUMES
-volumes:
-  wordpress:
-    driver: local
-    driver_opts:
-      device: /home/${USER}/data/wordpress
-  mariadb:
-    driver: local
-    driver_opts:
-      device: /home/${USER}/data/mariadb
+# volumes:
+#   wordpress:
+#     driver: local
+#     driver_opts:
+#       type: none
+#       device: /home/${USER}/data/wordpress
+#   mariadb:
+#     driver: local
+#     driver_opts:
+#       type: none
+#       device: /home/${USER}/data/mariadb
