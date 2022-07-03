@@ -6,4 +6,4 @@ GRANT ALL ON ${DB_NAME}.* TO '${DB_ADMIN}'@'%' IDENTIFIED BY '${DB_ADMIN_PASS}';
 FLUSH PRIVILEGES;
 EOF
 
-bash
+/usr/bin/mysqld_safe
