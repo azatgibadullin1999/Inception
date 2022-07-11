@@ -31,6 +31,7 @@ services:
     restart: always
     volumes:
       - ~/data/wordpress:/var/www/html/wordpress
+    env_file: .env
 
 #   NGINX CONFIG
   nginx :
