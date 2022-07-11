@@ -24,8 +24,10 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
 	chmod +x wp-cli.phar ; \
 	mv wp-cli.phar /usr/bin/wp
 
+RUN mkdir -p /run/php/ ; \
+	touch /run/php/php7.3-fpm.pid
+
 COPY ./conf/www.conf /etc/php/7.3/fpm/pool.d/www.conf
-COPY ./conf/php-fpm.conf /etc/php/7.3/fpm/php-fpm.conf
 COPY ./tools/start.sh /start.sh
 RUN chmod 744 /start.sh
 
